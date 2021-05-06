@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"log"
 
 	"github.com/BurntSushi/toml"
@@ -22,7 +21,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(*config)
 	s := apiserver.New(config)
 	if err := s.Start(); err != nil {
 		log.Fatal(err)
