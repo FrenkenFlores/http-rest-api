@@ -2,24 +2,27 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 
 	"github.com/BurntSushi/toml"
 	"github.com/FrenkenFlores/http-rest-api/internel/app/apiserver"
 )
 
-var config_path string
+var configPath string
 
 func init() {
-	flag.StringVar(&config_path, "config-path", "configs/apiserver.toml", "path to config file")
+	flag.StringVar(&configPath, "config-path", "configs/apiserver.toml", "path to config file")
 }
 
 func main() {
 	flag.Parse()
 	config := apiserver.NewConfig()
-	if _, err := toml.DecodeFile(config_path, config); err != nil {
+	_, err := toml.DecodeFile(configPath, config)
+	if err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println(*config)
 	s := apiserver.New(config)
 	if err := s.Start(); err != nil {
 		log.Fatal(err)
